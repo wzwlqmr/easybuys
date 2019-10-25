@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 
+	通过namespace将mapper接口引入
+-->
+<mapper namespace="com.mr.easybuy.wares.mapper.WaresMapper">
+
+<!--查询商品条数-->
+<select id="findTiao" resultType="int" >
+    select count(*) from t_good
+</select>
+
+
+<!--根据id查询商品-->
+<select id="findGoodsById" resultType="com.mr.easybuy.wares.entity.WaresVO" parameterType="com.mr.easybuy.wares.entity.WaresVO">
+    select * from t_good
+    <where>
+        <if test="good_id!='' and good_id!=null">
+            good_id=#{good_id}
+        </if>
+    </where>
+</select>
+
+<!--查询商品列表-->
+<select id="findWaresList" parameterType="com.mr.easybuy.wares.entity.WaresVO" resultType="com.mr.easybuy.wares.entity.WaresVO">
+    select * from t_good LIMIT #{startPos},#{rows}
+</select>
+
+<!--添加-->
+<insert id="add">
+    insert into t_good values
+    (#{good_id},#{emp_id},#{type_id},#{good_name},#{good_price},#{good_status},#{good_count},#{good_create_date},#{good_type},#{good_img})
+</insert>
+<update id="update">
+    update t_good
+        <set>
+            <if test="emp_id!=null and emp_id!=''">
+                emp_id=#{emp_id},
+            </if>
+            <if test="type_id!=null and type_id!=''">
+                type_id=#{type_id},
+            </if>
+            <if test="good_name!=null and good_name!=''">
+                good_name=#{good_name},
+            </if>
+            <if test="good_price!=null and good_price>0">
+                good_price=#{good_price},
+            </if>
+            <if test="good_status!=0">
+                good_status=#{good_status},
+            </if>
+            <if test="good_count>-1">
+                good_count=#{good_count},
+            </if>
+            <if test="good_create_date!=null">
+                good_create_date=#{good_create_date},
+            </if>
+            <if test="good_img!=null and good_img!=''">
+                good_img=#{good_img}
+            </if>
+        </set>
+        where good_id=#{good_id}
+</update>
+
+<select id="findAuthList" parameterType="com.mr.easybuy.wares.entity.TypeVO" resultType="com.mr.easybuy.wares.entity.TypeVO">
+    select * from t_inventory
+</select>
+
+</mapper>

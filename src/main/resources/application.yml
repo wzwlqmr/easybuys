@@ -1,0 +1,54 @@
+server:
+  port: 8085
+spring:
+#  rabbitmq:
+#    host: 192.168.31.236
+#    port: 5672
+#    username: giao
+#    password: giao
+#    listener:
+#      direct:
+#        retry:
+#          enabled: true
+#          max-attempts: 5
+#          initial-interval: 5000
+#          max-interval: 6000
+#          multiplier: 20
+#      simple:
+#        default-requeue-rejected: true
+  elasticsearch:
+    rest:
+      uris: http://localhost:9200
+  datasource:
+    url: jdbc:mysql://localhost:3306/seven?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
+  freemarker:
+    cache: false
+    charset: UTF-8
+    allow-request-override: false
+    check-template-location: true
+    content-type: text/html
+    expose-request-attributes: true
+    expose-session-attributes: true
+    suffix: .ftl
+    template-loader-path: classpath:/templates/shopping/
+
+  redis:
+    host: localhost
+    port: 6379
+    timeout: 1000ms
+    database: 0
+    jedis:
+      pool:
+        max-idle: 8
+        max-active: 200
+        max-wait: -1ms
+
+mybatis:
+  mapper-locations: classpath:/mappers/*.xml
+  type-aliases-package: com.mr.easybuy.wares.entity
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    #map-underscore-to-camel-case: true
